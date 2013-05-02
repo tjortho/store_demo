@@ -27,8 +27,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-#  gem 'sqlite3'
-  gem 'pg'
+  gem 'sqlite3'
+#  gem 'pg'
   gem 'factory_girl_rails'
   gem 'cane'
   gem 'reek'
