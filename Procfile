@@ -1,1 +1,1 @@
-bundle exec rails server -p $PORT
+bundle exec rails server Puma -p $PORT
