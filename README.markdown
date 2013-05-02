@@ -21,7 +21,17 @@ bundle exec rails s
 
 ### Provisioning Heroku
 
-You need to create an application on Heroku. From within the project directory:
+You need to create an application on Heroku.
+
+First, you'll need a heroku account. Sign up for one if you don't have one.
+
+You'll also need to add your public key to your heroku account. Go to the
+[account](https://dashboard.heroku.com/account) page and look for the section
+called _SSH keys_.
+
+For more on this, check out the [Managing Your SSH Keys](https://devcenter.heroku.com/articles/keys) section of the heroku documentation.
+
+Then, from within the project directory:
 
 ```
 $ heroku create
@@ -41,7 +51,8 @@ Let's get all our base data running on Heroku:
 
 ```
 heroku addons:add pgbackups
-heroku pgbackups:restore DATABASE 'https://github.com/[TODO: URL for pgsql dump]'
+heroku pgbackups:restore DATABASE
+'https://raw.github.com/JumpstartLab/store_demo/master/db/monster_development.pgdump'
 ```
 
 ### Install phantom.js
@@ -52,6 +63,41 @@ brew install phantomjs
 ``` 
 
 ### You're ready to go!
+
+## Performance
+
+After getting your Heroku app up and running, fork this repo and visit https://travis-ci.org. From there:
+
+* Sign in with your GitHub account
+* Visit https://travis-ci.org/profile
+* Flip the switch to `ON` on your forked store_demo repo
+
+In your app, open `store_config.rb`, and change the values of `production_url` and `email_address` to your Heroku app URL and your email address:
+
+```
+  def self.production_url
+    "http://my-demo-store.herokuapp.com"
+  end
+
+  def self.email_address
+    "me@example.com"
+  end
+```
+
+Push the updated `store_config.rb` to GitHub, and Travis will automatically run a set of timed tests against the specified URL. Once complete, you'll see a line at the bottom of your Travis logs that looks like this:
+
+```
+Runtime of 53.319523 submitted for me@example.com
+```
+
+This number gets sent off to Jumpstart Lab for scoring. Here's our performance goals for the night:
+
+* Baseline performance: 50 seconds
+* Bronze Performance: 42 seconds
+* Silver Performance: 30 seconds
+* Gold Performance: 15 seconds
+
+Go for the gold!
 
 ## Appendix
 
@@ -76,7 +122,7 @@ View the website at [localhost:8080](http://localhost:8080).
 
 ```
 brew update
-brew install poltergeist
+brew install phantomjs
 ```
 
 ## Welcome to Frank's Monsterporium, a faux online store
